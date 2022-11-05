@@ -1,7 +1,5 @@
 ﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 
 namespace CompanyEmployees.Controllers
@@ -10,21 +8,18 @@ namespace CompanyEmployees.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-
-        private ILoggerManager _logger;
-        public WeatherForecastController(ILoggerManager logger)
+        private readonly IRepositoryManager _repository;
+        public WeatherForecastController(IRepositoryManager repository)
         {
-            _logger = logger;
+            _repository = repository;
         }
-
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-            _logger.LogInfo("info");
-            _logger.LogDebug("debug");
-            _logger.LogWarn("warn");
-            _logger.LogError("error");
-
+            _repository.Company.AnyMethodFromCompanyRepository();
+            _repository.Employee.AnyMethodFromEmployeeRepository();
+            _repository.Schedule.AnyMethodFromScheduleRepository();
+            _repository.Shipment.AnyMethodFromShipmentRepository();
             return new string[] { "value1", "value2" };
         }
     }
