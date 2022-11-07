@@ -1,6 +1,8 @@
 ﻿using Entities;
 using Entities.Models;
 using Contracts;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Repository
 {
@@ -10,10 +12,7 @@ namespace Repository
         : base(repositoryContext)
         {
         }
-
-        public void AnyMethodFromCompanyRepository()
-        {
-            throw new System.NotImplementedException();
-        }
+        public IEnumerable<Company> GetAllCompanies(bool trackChanges) =>
+            FindAll(trackChanges).OrderBy(c => c.Name).ToList();
     }
 }

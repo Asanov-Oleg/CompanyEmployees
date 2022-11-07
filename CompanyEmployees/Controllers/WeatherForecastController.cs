@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Entities.Models;
 
 namespace CompanyEmployees.Controllers
 {
@@ -16,11 +17,11 @@ namespace CompanyEmployees.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _repository.Company.AnyMethodFromCompanyRepository();
-            _repository.Employee.AnyMethodFromEmployeeRepository();
-            _repository.Schedule.AnyMethodFromScheduleRepository();
-            _repository.Shipment.AnyMethodFromShipmentRepository();
-            return new string[] { "value1", "value2" };
+            var companies = _repository.Company.GetAllCompanies(trackChanges: false);
+            return Ok(companies);
+            // _repository.Employee.AnyMethodFromEmployeeRepository();
+            //_repository.Schedule.AnyMethodFromScheduleRepository();
+            //_repository.Shipment.AnyMethodFromShipmentRepository();
         }
     }
 }
