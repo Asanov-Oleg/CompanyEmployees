@@ -7,6 +7,7 @@ using System.Linq;
 using Entities.DataTransferObjects;
 using AutoMapper;
 using System.Collections.Generic;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CompanyEmployees.Controllers
 {
@@ -23,14 +24,20 @@ namespace CompanyEmployees.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet]
-        public IActionResult GetCompanies()
+        [HttpGet("{id}")]
+        public IActionResult GetCompanies(Guid id)
         {
             var companies = _repository.Company.GetAllCompanies(trackChanges: false);
-
-            var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
-
-            return Ok(companiesDto);
+            if(companies == null)
+            {
+                _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var companiesDto = _mapper.Map <CompanyDto> (companies);
+                return Ok(companiesDto);
+            }
         }
     }
 }

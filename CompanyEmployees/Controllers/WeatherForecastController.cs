@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Entities.Models;
+using System;
 
 namespace CompanyEmployees.Controllers
 {
@@ -19,7 +20,8 @@ namespace CompanyEmployees.Controllers
         {
             var companies = _repository.Company.GetAllCompanies(trackChanges: false);
             return Ok(companies);
-            // _repository.Employee.AnyMethodFromEmployeeRepository();
+            //var employees = _repository.Employee.GetEmployees(trackChanges: false);
+            //return Ok(employees);
             //_repository.Schedule.AnyMethodFromScheduleRepository();
             //_repository.Shipment.AnyMethodFromShipmentRepository();
             //merge

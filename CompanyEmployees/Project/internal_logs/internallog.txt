@@ -1,0 +1,4 @@
+2022-11-08 10:06:25.3545 Info Message Template Auto Format enabled
+2022-11-08 10:06:26.3998 Debug ScanAssembly('NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2022-11-08 10:06:28.6456 Info AppDomain Shutting down. LogFactory closing...
+2022-11-08 10:06:28.6979 Info LogFactory has been closed.
