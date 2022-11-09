@@ -7,7 +7,6 @@ using System.Linq;
 using Entities.DataTransferObjects;
 using AutoMapper;
 using System.Collections.Generic;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using CompanyEmployees.ModelBinders;
 
 namespace CompanyEmployees.Controllers
