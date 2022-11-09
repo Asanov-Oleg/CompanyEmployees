@@ -8,6 +8,7 @@ using Entities.DataTransferObjects;
 using AutoMapper;
 using System.Collections.Generic;
 using CompanyEmployees.ModelBinders;
+using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
 {
@@ -27,7 +28,7 @@ namespace CompanyEmployees.Controllers
         [HttpGet("{id}", Name = "CompanyById")]
         public IActionResult GetCompanies(Guid id)
         {
-            var companies = _repository.Company.GetAllCompanies(trackChanges: false);
+            var companies = _repository.Company.GetAllCompaniesAsync(trackChanges: false);
             if (companies == null)
             {
                 _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
@@ -88,7 +89,7 @@ namespace CompanyEmployees.Controllers
                 _logger.LogError("Parameter ids is null");
                 return BadRequest("Parameter ids is null");
             }
-            var companyEntities = _repository.Company.GetByIds(ids, trackChanges: false);
+            var companyEntities = _repository.Company.GetByIdsAsync(ids, trackChanges: false);
             if (ids.Count() != companyEntities.Count())
             {
                 _logger.LogError("Some ids are not valid in a collection");
@@ -100,13 +101,13 @@ namespace CompanyEmployees.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCompany(Guid id)
         {
-            var company = _repository.Company.GetCompany(id, trackChanges: false);
+            var company = _repository.Company.GetCompanyAsync(id, trackChanges: false);
             if (company == null)
             {
                 _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            _repository.Company.DeleteCompany(company);
+            _repository.Company.DeleteCompany(Task<company> company);
             _repository.Save();
             return NoContent();
         }
@@ -118,7 +119,7 @@ namespace CompanyEmployees.Controllers
                 _logger.LogError("CompanyForUpdateDto object sent from client is null.");
                 return BadRequest("CompanyForUpdateDto object is null");
             }
-            var companyEntity = _repository.Company.GetCompany(id, trackChanges: true);
+            var companyEntity = _repository.Company.GetCompanyAsync(id, trackChanges: true);
             if (companyEntity == null)
             {
                 _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");

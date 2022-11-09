@@ -8,6 +8,7 @@ using NLog;
 using CompanyEmployees.Extensions;
 using System.IO;
 using Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees
 {
@@ -26,6 +27,10 @@ namespace CompanyEmployees
         // This method gets called by the runtime. Use this method to add services to the container.//
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
