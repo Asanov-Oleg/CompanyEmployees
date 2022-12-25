@@ -8,6 +8,7 @@ using Entities.DataTransferObjects;
 using AutoMapper;
 using System.Collections.Generic;
 using CompanyEmployees.ModelBinders;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CompanyEmployees.Controllers
 {
@@ -24,7 +25,7 @@ namespace CompanyEmployees.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}", Name = "CompanyById")]
+        [HttpGet("{id}", Name = "CompanyById"), Authorize(Roles = "Manager")]
         public IActionResult GetCompanies(Guid id)
         {
             var companies = _repository.Company.GetAllCompanies(trackChanges: false);
@@ -39,7 +40,7 @@ namespace CompanyEmployees.Controllers
                 return Ok(companiesDto);
             }
         }
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
         {
             if (company == null)
@@ -58,7 +59,7 @@ namespace CompanyEmployees.Controllers
            companyToReturn);
         }
 
-        [HttpPost("collection")]
+        [HttpPost("collection"), Authorize]
         public IActionResult CreateCompanyCollection([FromBody]
             IEnumerable<CompanyForCreationDto> companyCollection)
         {
@@ -80,7 +81,7 @@ namespace CompanyEmployees.Controllers
            companyCollectionToReturn);
         }
 
-        [HttpGet("collection/({ids})", Name = "CompanyCollection")]
+        [HttpGet("collection/({ids})", Name = "CompanyCollection"), Authorize]
         public IActionResult GetCompanyCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
         {
             if (ids == null)
@@ -97,7 +98,7 @@ namespace CompanyEmployees.Controllers
             var companiesToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
             return Ok(companiesToReturn);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public IActionResult DeleteCompany(Guid id)
         {
             var company = _repository.Company.GetCompany(id, trackChanges: false);
@@ -110,7 +111,7 @@ namespace CompanyEmployees.Controllers
             _repository.Save();
             return NoContent();
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public IActionResult UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto company)
         {
             if (company == null)
