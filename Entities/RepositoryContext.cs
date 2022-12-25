@@ -19,6 +19,8 @@ namespace Entities
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Schedule> Employees { get; set; }
+        public DbSet<Company> Schedules { get; set; }
+        public DbSet<Schedule> Shipments { get; set; }
 
     }
 }

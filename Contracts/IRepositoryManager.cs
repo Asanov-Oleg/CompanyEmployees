@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
@@ -11,5 +12,6 @@ namespace Contracts
         IScheduleRepository Schedule { get; }
         IShipmentRepository Shipment { get; }
         void Save();
+        Task SaveAsync();
     }
 }

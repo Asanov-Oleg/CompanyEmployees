@@ -11,5 +11,6 @@ namespace Contracts
         Company GetCompany(Guid companyId, bool trackChanges);
         void CreateCompany(Company company);
         void DeleteCompany(Company company);
+        void AnyMethodFromCompanyRepository();
     }
 }

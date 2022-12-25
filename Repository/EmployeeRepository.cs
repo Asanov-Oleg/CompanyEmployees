@@ -4,6 +4,7 @@ using Contracts;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -26,9 +27,18 @@ namespace Repository
             employee.CompanyId = companyId;
             Create(employee);
         }
+        public void AnyMethodFromEmployeeRepository()
+        {
+            throw new NotImplementedException();
+        }
         public void DeleteEmployee(Employee employee)
         {
             Delete(employee);
+        }
+
+        public Task<Employee> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges)
+        {
+            throw new NotImplementedException();
         }
     }
 }

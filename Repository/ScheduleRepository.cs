@@ -1,6 +1,10 @@
 ﻿using Entities;
 using Entities.Models;
 using Contracts;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+using Entities.DataTransferObjects;
 
 namespace Repository
 {
@@ -11,9 +15,23 @@ namespace Repository
         {
         }
 
-        public void AnyMethodFromScheduleRepository()
+        public IEnumerable<Schedule> GetAllSchedules(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.Id).ToList();
+        public Schedule GetSchedule(Guid ScheduleId, bool trackChanges) => FindByCondition(c
+            => c.Id.Equals(ScheduleId), trackChanges).SingleOrDefault();
+        public void CreateSchedule(ScheduleDto Schedule) => CreateSchedule(Schedule);
+        public void DeleteSchedule(Schedule Schedule)
         {
-            throw new System.NotImplementedException();
+            Delete(Schedule);
+        }
+
+        void IScheduleRepository.AnyMethodFromScheduleRepository()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateSchedule(Schedule Schedule)
+        {
+            throw new NotImplementedException();
         }
     }
 }

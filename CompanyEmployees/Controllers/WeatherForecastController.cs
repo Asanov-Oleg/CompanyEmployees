@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Entities.Models;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace CompanyEmployees.Controllers
 {
@@ -18,13 +19,16 @@ namespace CompanyEmployees.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var companies = _repository.Company.GetAllCompanies(trackChanges: false);
-            return Ok(companies);
-            //var employees = _repository.Employee.GetEmployees(trackChanges: false);
-            //return Ok(employees);
-            //_repository.Schedule.AnyMethodFromScheduleRepository();
-            //_repository.Shipment.AnyMethodFromShipmentRepository();
-            //merge
+            _repository.Company.AnyMethodFromCompanyRepository();
+            _repository.Employee.AnyMethodFromEmployeeRepository();
+            return new string[] { "value1", "value2" };
+        }
+
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
         }
     }
 }
