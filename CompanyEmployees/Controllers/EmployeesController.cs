@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,7 +24,7 @@ namespace CompanyEmployees.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}", Name = "GetEmployeeForCompany")]
+        [HttpGet("{id}", Name = "GetEmployeeForCompany"), Authorize]
         public IActionResult GetEmployeeForCompany(Guid companyId, Guid id)
         {
             var company = _repository.Company.GetCompany(companyId, trackChanges: false);
@@ -42,7 +43,7 @@ namespace CompanyEmployees.Controllers
             var employee = _mapper.Map<EmployeeDto>(employeeDb);
             return Ok(employee);
         }
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody]
 EmployeeForCreationDto employee)
         {
@@ -67,7 +68,7 @@ EmployeeForCreationDto employee)
            employeeToReturn.Id
             }, employeeToReturn);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public IActionResult DeleteEmployeeForCompany(Guid companyId, Guid id)
         {
             var company = _repository.Company.GetCompany(companyId, trackChanges: false);
@@ -87,7 +88,7 @@ EmployeeForCreationDto employee)
             _repository.Save();
             return NoContent();
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public IActionResult UpdateEmployeeForCompany(Guid companyId, Guid id, [FromBody]
  EmployeeForUpdateDto employee)
         {
@@ -113,7 +114,7 @@ EmployeeForCreationDto employee)
             _repository.Save();
             return NoContent();
         }
-        [HttpPatch("{id}")]
+        [HttpPatch("{id}"), Authorize]
         public IActionResult PartiallyUpdateEmployeeForCompany(Guid companyId, Guid id,
 [FromBody] JsonPatchDocument<EmployeeForUpdateDto> patchDoc)
         {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +25,7 @@ namespace CompanyEmployees.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult GetSchedules()
         {
             var schedules = _repository.Schedule.GetAllSchedules(trackChanges: false);
@@ -32,7 +33,7 @@ namespace CompanyEmployees.Controllers
             return Ok(ScheduleDto);
         }
 
-        [HttpGet("{id}", Name = "ScheduleById")]
+        [HttpGet("{id}", Name = "ScheduleById"), Authorize]
         public IActionResult GetSchedule(Guid id)
         {
             var Schedule = _repository.Schedule.GetSchedule(id, trackChanges: false);
@@ -48,7 +49,7 @@ namespace CompanyEmployees.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult CreateSchedule ([FromBody] ScheduleForCreationDto Schedule)
         {
             if (Schedule == null)
@@ -64,7 +65,7 @@ namespace CompanyEmployees.Controllers
 
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public IActionResult DeleteSchedule(Guid id)
         {
             var Schedule = _repository.Schedule.GetSchedule(id, trackChanges: false);
@@ -78,7 +79,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public IActionResult UpdateSchedule(Guid id, [FromBody] ScheduleForUpdateDto Schedule)
         {
             if (Schedule == null)

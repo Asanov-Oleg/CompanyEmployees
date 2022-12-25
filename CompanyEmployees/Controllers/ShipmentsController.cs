@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -32,7 +33,7 @@ namespace CompanyEmployees.Controllers
             return Ok(ShipmentsDto);
         }
 
-        [HttpGet("{id}", Name = "ShipmentById")]
+        [HttpGet("{id}", Name = "ShipmentById"), Authorize]
         public IActionResult GetShipment(Guid id)
         {
             var Shipment = _repository.Shipment.GetShipment(id, trackChanges: false);
@@ -48,7 +49,7 @@ namespace CompanyEmployees.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult CreateShipment([FromBody] ShipmentForCreationDto Shipment)
         {
             if (Shipment == null)
@@ -63,7 +64,7 @@ namespace CompanyEmployees.Controllers
             return CreatedAtRoute("ShipmentById", new { id = ShipmentToReturn.Id }, ShipmentToReturn);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public IActionResult DeleteShipment(Guid id)
         {
             var Shipment = _repository.Shipment.GetShipment(id, trackChanges: false);
@@ -77,7 +78,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public IActionResult UpdateShipment(Guid id, [FromBody] ShipmentForUpdateDto Shipment)
         {
             if (Shipment == null)
